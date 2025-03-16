@@ -40,7 +40,14 @@ export default function ProfileForm({ onClose }: ProfileFormProps) {
       try {
         setLoading(true);
         const response = await fetch(
-          "https://spareshive-api-1523959fece7.herokuapp.com/merchant/6"
+          "https://spareshive-api-1523959fece7.herokuapp.com/merchant/6",
+          {
+            // Add headers for authentication if you have them
+            headers: {
+              "Content-Type": "application/json",
+              // 'Authorization': 'Bearer YOUR_TOKEN_HERE' // Uncomment and add your token when available
+            },
+          }
         );
 
         if (response.status === 401) {
@@ -72,7 +79,6 @@ export default function ProfileForm({ onClose }: ProfileFormProps) {
         }
 
         const data = await response.json();
-
         setMerchant(data);
       } catch (err) {
         console.error("Error fetching merchant data:", err);
@@ -120,15 +126,15 @@ export default function ProfileForm({ onClose }: ProfileFormProps) {
   };
 
   return (
-    <div className="flex-1 p-8 bg-[#1A1A1A]">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl text-white">
-          {`${isEditing ? "Edit" : ""} My Profile`}
-        </h1>
+    <div className="flex-1 p-4 md:p-8 bg-[#1A1A1A]">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+        <h1 className="text-xl md:text-2xl text-white">{`${
+          isEditing ? "Edit" : ""
+        } My Profile`}</h1>
         {!isEditing && (
           <Button
             onClick={() => setIsEditing(true)}
-            className="bg-yellow-500 text-black hover:bg-yellow-600"
+            className="bg-yellow-500 text-black hover:bg-yellow-600 w-full sm:w-auto"
           >
             <Edit className="h-4 w-4 mr-2" />
             Edit Profile
@@ -137,9 +143,9 @@ export default function ProfileForm({ onClose }: ProfileFormProps) {
       </div>
 
       {error ? (
-        <div className="bg-yellow-900/20 border border-yellow-800 text-yellow-300 p-4 rounded-lg mb-6">
+        <div className="bg-yellow-900/20 border border-yellow-800 text-yellow-300 p-4 rounded-lg mb-6 text-sm md:text-base">
           <p>Note: {error}</p>
-          <p className="mt-2 text-sm">
+          <p className="mt-2 text-xs md:text-sm">
             This form is currently displaying mock data. To connect to the real
             API, you'll need to provide authentication credentials.
           </p>
@@ -155,14 +161,14 @@ export default function ProfileForm({ onClose }: ProfileFormProps) {
         <div className="bg-[#1A1A1A] rounded-lg max-w-4xl mx-auto">
           {isEditing ? (
             // Edit Mode - Form with input fields
-            <form className="grid grid-cols-2 gap-6">
-              <div className="col-span-2">
+            <form className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+              <div className="col-span-1 md:col-span-2">
                 <h2 className="text-lg text-white mb-4 border-b border-[#2A2A2A] pb-2">
                   Business Details
                 </h2>
               </div>
 
-              <div>
+              <div className="col-span-1">
                 <label className="block text-sm text-gray-400 mb-1">
                   Business Name
                 </label>
@@ -172,7 +178,7 @@ export default function ProfileForm({ onClose }: ProfileFormProps) {
                 />
               </div>
 
-              <div>
+              <div className="col-span-1">
                 <label className="block text-sm text-gray-400 mb-1">
                   Registration Number
                 </label>
@@ -182,13 +188,13 @@ export default function ProfileForm({ onClose }: ProfileFormProps) {
                 />
               </div>
 
-              <div className="col-span-2">
+              <div className="col-span-1 md:col-span-2">
                 <h2 className="text-lg text-white mb-4 mt-4 border-b border-[#2A2A2A] pb-2">
                   Contact Information
                 </h2>
               </div>
 
-              <div>
+              <div className="col-span-1">
                 <label className="block text-sm text-gray-400 mb-1">
                   Email Address
                 </label>
@@ -198,7 +204,7 @@ export default function ProfileForm({ onClose }: ProfileFormProps) {
                 />
               </div>
 
-              <div>
+              <div className="col-span-1">
                 <label className="block text-sm text-gray-400 mb-1">
                   Phone Number
                 </label>
@@ -208,13 +214,13 @@ export default function ProfileForm({ onClose }: ProfileFormProps) {
                 />
               </div>
 
-              <div className="col-span-2">
+              <div className="col-span-1 md:col-span-2">
                 <h2 className="text-lg text-white mb-4 border-b border-[#2A2A2A] pb-2 mt-4">
                   Address Information
                 </h2>
               </div>
 
-              <div className="col-span-2">
+              <div className="col-span-1 md:col-span-2">
                 <label className="block text-sm text-gray-400 mb-1">
                   Address Line 1
                 </label>
@@ -224,7 +230,7 @@ export default function ProfileForm({ onClose }: ProfileFormProps) {
                 />
               </div>
 
-              <div className="col-span-2">
+              <div className="col-span-1 md:col-span-2">
                 <label className="block text-sm text-gray-400 mb-1">
                   Address Line 2
                 </label>
@@ -234,7 +240,7 @@ export default function ProfileForm({ onClose }: ProfileFormProps) {
                 />
               </div>
 
-              <div className="col-span-2">
+              <div className="col-span-1 md:col-span-2">
                 <label className="block text-sm text-gray-400 mb-1">
                   Address Line 3
                 </label>
@@ -244,7 +250,7 @@ export default function ProfileForm({ onClose }: ProfileFormProps) {
                 />
               </div>
 
-              <div>
+              <div className="col-span-1">
                 <label className="block text-sm text-gray-400 mb-1">City</label>
                 <Input
                   defaultValue={merchant.city}
@@ -252,7 +258,7 @@ export default function ProfileForm({ onClose }: ProfileFormProps) {
                 />
               </div>
 
-              <div>
+              <div className="col-span-1">
                 <label className="block text-sm text-gray-400 mb-1">
                   County
                 </label>
@@ -262,7 +268,7 @@ export default function ProfileForm({ onClose }: ProfileFormProps) {
                 />
               </div>
 
-              <div>
+              <div className="col-span-1">
                 <label className="block text-sm text-gray-400 mb-1">
                   State/Province
                 </label>
@@ -272,7 +278,7 @@ export default function ProfileForm({ onClose }: ProfileFormProps) {
                 />
               </div>
 
-              <div>
+              <div className="col-span-1">
                 <label className="block text-sm text-gray-400 mb-1">
                   Postal/Zip Code
                 </label>
@@ -282,7 +288,7 @@ export default function ProfileForm({ onClose }: ProfileFormProps) {
                 />
               </div>
 
-              <div>
+              <div className="col-span-1">
                 <label className="block text-sm text-gray-400 mb-1">
                   Country
                 </label>
@@ -292,7 +298,7 @@ export default function ProfileForm({ onClose }: ProfileFormProps) {
                 />
               </div>
 
-              <div>
+              <div className="col-span-1">
                 <label className="block text-sm text-gray-400 mb-1">
                   Country Code
                 </label>
@@ -302,17 +308,17 @@ export default function ProfileForm({ onClose }: ProfileFormProps) {
                 />
               </div>
 
-              <div className="col-span-2 flex justify-end gap-4 mt-6">
+              <div className="col-span-1 md:col-span-2 flex flex-col sm:flex-row justify-end gap-4 mt-6">
                 <Button
                   onClick={handleCancel}
-                  className="text-black bg-red-700 hover:bg-[#fc3a3a]"
+                  className="text-black bg-red-700 hover:bg-[#fc3a3a] w-full sm:w-auto order-2 sm:order-1"
                 >
                   <X className="h-4 w-4 mr-2" />
                   Cancel
                 </Button>
                 <Button
                   onClick={handleSave}
-                  className="bg-yellow-500 text-black hover:bg-yellow-600"
+                  className="bg-yellow-500 text-black hover:bg-yellow-600 w-full sm:w-auto order-1 sm:order-2"
                 >
                   <Save className="h-4 w-4 mr-2" />
                   Save Changes
@@ -321,137 +327,155 @@ export default function ProfileForm({ onClose }: ProfileFormProps) {
             </form>
           ) : (
             // Display Mode - Read-only view with borders
-            <div className="grid grid-cols-2 gap-6">
-              <div className="col-span-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+              <div className="col-span-1 md:col-span-2">
                 <h2 className="text-lg text-white mb-4 border-b border-[#2A2A2A] pb-2">
                   Business Details
                 </h2>
               </div>
 
-              <div>
+              <div className="col-span-1">
                 <h3 className="block text-sm text-gray-400 mb-1">
                   Business Name
                 </h3>
                 <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                  <p className="text-gray-300">{merchant.businessName}</p>
+                  <p className="text-gray-300 break-words">
+                    {merchant.businessName}
+                  </p>
                 </div>
               </div>
 
-              <div>
+              <div className="col-span-1">
                 <h3 className="block text-sm text-gray-400 mb-1">
                   Registration Number
                 </h3>
                 <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                  <p className="text-gray-300">{merchant.registrationNumber}</p>
+                  <p className="text-gray-300 break-words">
+                    {merchant.registrationNumber}
+                  </p>
                 </div>
               </div>
 
-              <div className="col-span-2">
+              <div className="col-span-1 md:col-span-2">
                 <h2 className="text-lg text-white mb-4 mt-4 border-b border-[#2A2A2A] pb-2">
                   Contact Information
                 </h2>
               </div>
 
-              <div>
+              <div className="col-span-1">
                 <h3 className="block text-sm text-gray-400 mb-1">
                   Email Address
                 </h3>
                 <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                  <p className="text-gray-300">{merchant.email}</p>
+                  <p className="text-gray-300 break-words">{merchant.email}</p>
                 </div>
               </div>
 
-              <div>
+              <div className="col-span-1">
                 <h3 className="block text-sm text-gray-400 mb-1">
                   Phone Number
                 </h3>
                 <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                  <p className="text-gray-300">{merchant.phoneNumber}</p>
+                  <p className="text-gray-300 break-words">
+                    {merchant.phoneNumber}
+                  </p>
                 </div>
               </div>
 
-              <div className="col-span-2">
+              <div className="col-span-1 md:col-span-2">
                 <h2 className="text-lg text-white mb-4 border-b border-[#2A2A2A] pb-2 mt-4">
                   Address Information
                 </h2>
               </div>
 
-              <div className="col-span-2">
+              <div className="col-span-1 md:col-span-2">
                 <h3 className="block text-sm text-gray-400 mb-1">
                   Address Line 1
                 </h3>
                 <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                  <p className="text-gray-300">{merchant.addressLine1}</p>
+                  <p className="text-gray-300 break-words">
+                    {merchant.addressLine1}
+                  </p>
                 </div>
               </div>
 
               {merchant.addressLine2 && (
-                <div className="col-span-2">
+                <div className="col-span-1 md:col-span-2">
                   <h3 className="block text-sm text-gray-400 mb-1">
                     Address Line 2
                   </h3>
                   <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                    <p className="text-gray-300">{merchant.addressLine2}</p>
+                    <p className="text-gray-300 break-words">
+                      {merchant.addressLine2}
+                    </p>
                   </div>
                 </div>
               )}
 
               {merchant.addressLine3 && (
-                <div className="col-span-2">
+                <div className="col-span-1 md:col-span-2">
                   <h3 className="block text-sm text-gray-400 mb-1">
                     Address Line 3
                   </h3>
                   <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                    <p className="text-gray-300">{merchant.addressLine3}</p>
+                    <p className="text-gray-300 break-words">
+                      {merchant.addressLine3}
+                    </p>
                   </div>
                 </div>
               )}
 
-              <div>
+              <div className="col-span-1">
                 <h3 className="block text-sm text-gray-400 mb-1">City</h3>
                 <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                  <p className="text-gray-300">{merchant.city}</p>
+                  <p className="text-gray-300 break-words">{merchant.city}</p>
                 </div>
               </div>
 
-              <div>
+              <div className="col-span-1">
                 <h3 className="block text-sm text-gray-400 mb-1">County</h3>
                 <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                  <p className="text-gray-300">{merchant.county}</p>
+                  <p className="text-gray-300 break-words">{merchant.county}</p>
                 </div>
               </div>
 
-              <div>
+              <div className="col-span-1">
                 <h3 className="block text-sm text-gray-400 mb-1">
                   State/Province
                 </h3>
                 <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                  <p className="text-gray-300">{merchant.state}</p>
+                  <p className="text-gray-300 break-words">{merchant.state}</p>
                 </div>
               </div>
 
-              <div>
+              <div className="col-span-1">
                 <h3 className="block text-sm text-gray-400 mb-1">
                   Postal/Zip Code
                 </h3>
                 <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                  <p className="text-gray-300">{merchant.zipCode}</p>
+                  <p className="text-gray-300 break-words">
+                    {merchant.zipCode}
+                  </p>
                 </div>
               </div>
 
-              <div>
+              <div className="col-span-1">
                 <h3 className="block text-sm text-gray-400 mb-1">Country</h3>
                 <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                  <p className="text-gray-300">{merchant.country}</p>
+                  <p className="text-gray-300 break-words">
+                    {merchant.country}
+                  </p>
                 </div>
               </div>
 
-              <div>
+              <div className="col-span-1">
                 <h3 className="block text-sm text-gray-400 mb-1">
                   Country Code
                 </h3>
                 <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                  <p className="text-gray-300">{merchant.countryCode}</p>
+                  <p className="text-gray-300 break-words">
+                    {merchant.countryCode}
+                  </p>
                 </div>
               </div>
             </div>
