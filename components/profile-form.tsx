@@ -3,7 +3,16 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Edit, Save, X } from "lucide-react";
+import {
+  Edit,
+  Save,
+  X,
+  Mail,
+  Phone,
+  MapPin,
+  Building,
+  Globe,
+} from "lucide-react";
 
 interface MerchantData {
   merchantId: number;
@@ -128,9 +137,7 @@ export default function ProfileForm({ onClose }: ProfileFormProps) {
   return (
     <div className="flex-1 p-4 md:p-8 bg-[#1A1A1A]">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-        <h1 className="text-xl md:text-2xl text-white">{`${
-          isEditing ? "Edit" : ""
-        } My Profile`}</h1>
+        <h1 className="text-xl md:text-2xl text-white">My Profile</h1>
         {!isEditing && (
           <Button
             onClick={() => setIsEditing(true)}
@@ -326,156 +333,163 @@ export default function ProfileForm({ onClose }: ProfileFormProps) {
               </div>
             </form>
           ) : (
-            // Display Mode - Read-only view with borders
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-              <div className="col-span-1 md:col-span-2">
-                <h2 className="text-lg text-white mb-4 border-b border-[#2A2A2A] pb-2">
-                  Business Details
-                </h2>
-              </div>
-
-              <div className="col-span-1">
-                <h3 className="block text-sm text-gray-400 mb-1">
-                  Business Name
-                </h3>
-                <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                  <p className="text-gray-300 break-words">
-                    {merchant.businessName}
-                  </p>
+            <div className="space-y-8">
+              {/* Business Information Section */}
+              <div className="bg-[#1E1E1E] rounded-lg p-5">
+                <div className="flex items-center mb-6">
+                  <Building className="h-5 w-5 text-yellow-500 mr-2" />
+                  <h2 className="text-lg text-white font-medium">
+                    Business Details
+                  </h2>
                 </div>
-              </div>
 
-              <div className="col-span-1">
-                <h3 className="block text-sm text-gray-400 mb-1">
-                  Registration Number
-                </h3>
-                <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                  <p className="text-gray-300 break-words">
-                    {merchant.registrationNumber}
-                  </p>
-                </div>
-              </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                  <div>
+                    <div className="text-xs uppercase tracking-wider text-gray-500 mb-2">
+                      Business Name
+                    </div>
+                    <div className="text-gray-100 font-medium text-base">
+                      {merchant.businessName}
+                    </div>
+                  </div>
 
-              <div className="col-span-1 md:col-span-2">
-                <h2 className="text-lg text-white mb-4 mt-4 border-b border-[#2A2A2A] pb-2">
-                  Contact Information
-                </h2>
-              </div>
+                  <div>
+                    <div className="text-xs uppercase tracking-wider text-gray-500 mb-2">
+                      Registration Number
+                    </div>
+                    <div className="text-gray-100 font-medium text-base">
+                      {merchant.registrationNumber}
+                    </div>
+                  </div>
 
-              <div className="col-span-1">
-                <h3 className="block text-sm text-gray-400 mb-1">
-                  Email Address
-                </h3>
-                <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                  <p className="text-gray-300 break-words">{merchant.email}</p>
-                </div>
-              </div>
+                  <div className="flex items-start">
+                    <Mail className="h-4 w-4 text-yellow-500 mt-0.5 mr-2 flex-shrink-0" />
+                    <div>
+                      <div className="text-xs uppercase tracking-wider text-gray-500 mb-2">
+                        Email Address
+                      </div>
+                      <div className="text-gray-100 font-medium text-base break-all">
+                        {merchant.email}
+                      </div>
+                    </div>
+                  </div>
 
-              <div className="col-span-1">
-                <h3 className="block text-sm text-gray-400 mb-1">
-                  Phone Number
-                </h3>
-                <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                  <p className="text-gray-300 break-words">
-                    {merchant.phoneNumber}
-                  </p>
-                </div>
-              </div>
-
-              <div className="col-span-1 md:col-span-2">
-                <h2 className="text-lg text-white mb-4 border-b border-[#2A2A2A] pb-2 mt-4">
-                  Address Information
-                </h2>
-              </div>
-
-              <div className="col-span-1 md:col-span-2">
-                <h3 className="block text-sm text-gray-400 mb-1">
-                  Address Line 1
-                </h3>
-                <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                  <p className="text-gray-300 break-words">
-                    {merchant.addressLine1}
-                  </p>
-                </div>
-              </div>
-
-              {merchant.addressLine2 && (
-                <div className="col-span-1 md:col-span-2">
-                  <h3 className="block text-sm text-gray-400 mb-1">
-                    Address Line 2
-                  </h3>
-                  <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                    <p className="text-gray-300 break-words">
-                      {merchant.addressLine2}
-                    </p>
+                  <div className="flex items-start">
+                    <Phone className="h-4 w-4 text-yellow-500 mt-0.5 mr-2 flex-shrink-0" />
+                    <div>
+                      <div className="text-xs uppercase tracking-wider text-gray-500 mb-2">
+                        Phone Number
+                      </div>
+                      <div className="text-gray-100 font-medium text-base">
+                        {merchant.phoneNumber}
+                      </div>
+                    </div>
                   </div>
                 </div>
-              )}
+              </div>
 
-              {merchant.addressLine3 && (
-                <div className="col-span-1 md:col-span-2">
-                  <h3 className="block text-sm text-gray-400 mb-1">
-                    Address Line 3
-                  </h3>
-                  <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                    <p className="text-gray-300 break-words">
-                      {merchant.addressLine3}
-                    </p>
+              {/* Address Information Section */}
+              <div className="bg-[#1E1E1E] rounded-lg p-5">
+                <div className="flex items-center mb-6">
+                  <MapPin className="h-5 w-5 text-yellow-500 mr-2" />
+                  <h2 className="text-lg text-white font-medium">
+                    Address Information
+                  </h2>
+                </div>
+
+                <div className="space-y-6">
+                  <div>
+                    <div className="text-gray-100 font-medium text-base">
+                      <div className="mb-4">
+                        <div className="text-xs uppercase tracking-wider text-gray-500 mb-2">
+                          Address one
+                        </div>
+                        <div className="text-gray-100 font-medium text-base">
+                          {merchant.addressLine1}
+                        </div>
+                      </div>
+
+                      {merchant.addressLine2 && (
+                        <div className="mb-4">
+                          <div className="text-xs uppercase tracking-wider text-gray-500 mb-2">
+                            Address two
+                          </div>
+                          <div className="text-gray-100 font-medium text-base">
+                            {merchant.addressLine2}
+                          </div>
+                        </div>
+                      )}
+                      {merchant.addressLine3 && (
+                        <div className="mb-4">
+                          <div className="text-xs uppercase tracking-wider text-gray-500 mb-2">
+                            Address three
+                          </div>
+                          <div className="text-gray-100 font-medium text-base">
+                            {merchant.addressLine3}
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              )}
 
-              <div className="col-span-1">
-                <h3 className="block text-sm text-gray-400 mb-1">City</h3>
-                <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                  <p className="text-gray-300 break-words">{merchant.city}</p>
-                </div>
-              </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                    <div>
+                      <div className="text-xs uppercase tracking-wider text-gray-500 mb-2">
+                        City
+                      </div>
+                      <div className="text-gray-100 font-medium text-base">
+                        {merchant.city}
+                      </div>
+                    </div>
 
-              <div className="col-span-1">
-                <h3 className="block text-sm text-gray-400 mb-1">County</h3>
-                <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                  <p className="text-gray-300 break-words">{merchant.county}</p>
-                </div>
-              </div>
+                    <div>
+                      <div className="text-xs uppercase tracking-wider text-gray-500 mb-2">
+                        County
+                      </div>
+                      <div className="text-gray-100 font-medium text-base">
+                        {merchant.county}
+                      </div>
+                    </div>
 
-              <div className="col-span-1">
-                <h3 className="block text-sm text-gray-400 mb-1">
-                  State/Province
-                </h3>
-                <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                  <p className="text-gray-300 break-words">{merchant.state}</p>
-                </div>
-              </div>
+                    <div>
+                      <div className="text-xs uppercase tracking-wider text-gray-500 mb-2">
+                        State/Province
+                      </div>
+                      <div className="text-gray-100 font-medium text-base">
+                        {merchant.state}
+                      </div>
+                    </div>
 
-              <div className="col-span-1">
-                <h3 className="block text-sm text-gray-400 mb-1">
-                  Postal/Zip Code
-                </h3>
-                <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                  <p className="text-gray-300 break-words">
-                    {merchant.zipCode}
-                  </p>
-                </div>
-              </div>
+                    <div>
+                      <div className="text-xs uppercase tracking-wider text-gray-500 mb-2">
+                        Postal/Zip Code
+                      </div>
+                      <div className="text-gray-100 font-medium text-base">
+                        {merchant.zipCode}
+                      </div>
+                    </div>
 
-              <div className="col-span-1">
-                <h3 className="block text-sm text-gray-400 mb-1">Country</h3>
-                <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                  <p className="text-gray-300 break-words">
-                    {merchant.country}
-                  </p>
-                </div>
-              </div>
+                    <div className="flex items-start">
+                      <Globe className="h-4 w-4 text-yellow-500 mt-0.5 mr-2 flex-shrink-0" />
+                      <div>
+                        <div className="text-xs uppercase tracking-wider text-gray-500 mb-2">
+                          Country
+                        </div>
+                        <div className="text-gray-100 font-medium text-base">
+                          {merchant.country}
+                        </div>
+                      </div>
+                    </div>
 
-              <div className="col-span-1">
-                <h3 className="block text-sm text-gray-400 mb-1">
-                  Country Code
-                </h3>
-                <div className="bg-[#2A2A2A] border border-[#3A3A3A] rounded-md px-3 py-2">
-                  <p className="text-gray-300 break-words">
-                    {merchant.countryCode}
-                  </p>
+                    <div>
+                      <div className="text-xs uppercase tracking-wider text-gray-500 mb-2">
+                        Country Code
+                      </div>
+                      <div className="text-gray-100 font-medium text-base">
+                        {merchant.countryCode}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
